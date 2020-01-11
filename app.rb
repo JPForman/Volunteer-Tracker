@@ -20,3 +20,32 @@ end
 get('/projects/new') do
   erb(:new_project)
 end
+
+post ('/projects') do
+  title = params[:project_name]
+  project = Project.new({:title => title, :id => nil})
+  project.save()
+  redirect to('/projects')
+end
+
+get ('/projects/:id') do
+  @project = Project.find(params[:id].to_i())
+  erb(:project)
+end
+
+get ('/projects/:id/edit') do
+  @project = Project.find(params[:id].to_i())
+  erb(:edit_project)
+end
+
+patch ('/projects/:id') do
+  @project = Project.find(params[:id].to_i())
+  @project.update({:title => (params[:title])})
+  redirect to('/projects')
+end
+
+delete ('/projects/:id') do
+  @project = Project.find(params[:id].to_i())
+  @project.delete()
+  redirect to('/projects')
+end
