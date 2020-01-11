@@ -1,1 +1,14 @@
-<h1>Hello World!</h1>
+<h1>Volunteer Project Manager</h1>
+
+<h2>Current Projects</h2>
+<% if @projects.any? %>
+  <ul>
+    <% @projects.each do |project| %>
+      <li><a href="/projects/<%= projects.id %>"><%= project.name %></a></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>There are currently no projects in production.</p>
+<% end %>
+
+<a href="/projects/new">Add a new project</a>
