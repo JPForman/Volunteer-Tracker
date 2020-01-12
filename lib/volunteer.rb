@@ -45,6 +45,16 @@ class Volunteer
     end
   end
 
+  def update(name, project_id)
+    @name = name
+    @project_id = project_id
+    DB.exec("UPDATE volunteers SET name = '#{@name}', project_id = #{@project_id} WHERE id = #{@id}")
+  end
+
+  def delete
+    DB.exec("DELETE FROM volunteers WHERE id = #{@id}")
+  end
+
   def self.find_by_project(project_id)
     volunteers = []
     returned_volunteers = DB.exec("SELECT * FROM volunteers WHERE project_id = #{project_id};")
@@ -54,5 +64,9 @@ class Volunteer
       volunteers.push(Volunteer.new({:name => name, :project_id => project_id, :id => id}))
     end
     volunteers
+  end
+
+  def project
+    Project.find(@project_id)
   end
 end
